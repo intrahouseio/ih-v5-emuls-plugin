@@ -1,0 +1,6 @@
+{
+    "id":"emuls",
+    "description":"Emulator",
+    "cross":true,
+	"version":"5.5.0"
+}

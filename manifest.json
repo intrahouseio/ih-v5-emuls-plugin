@@ -1,0 +1,13 @@
+{
+  "description": "Emulator",
+
+  "default_channel": {
+    "chan": "1",
+    "desc": "DI",
+    "period": 60,
+    "min": 0,
+    "max": 100,
+    "delta": 1,
+    "weight": 1
+  }
+}
