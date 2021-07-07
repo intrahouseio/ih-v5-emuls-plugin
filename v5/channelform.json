@@ -1,8 +1,7 @@
 {
   "grid": [
     { "id": "p2", "xs": 6, "class": "main", "table": "devhard" },
-    { "id": "p3", "xs": 6, "class": "main", "table": "devhard" },
-    { "id": "p9", "xs": 12, "class": "main", "table": "onechannelrtTable" }
+    { "id": "p3", "xs": 6, "class": "main", "table": "devhard" }
   ],
   "spacing": 4,
 
