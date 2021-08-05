@@ -3,6 +3,7 @@
 
   "default_channel": {
     "chan": "1",
+    "r":1,
     "desc": "DI",
     "period": 60,
     "min": 0,

@@ -32,7 +32,8 @@
   ],
 
   "p3": [
-    { "prop": "w", "title": "Команда", "type": "cb" },
+    { "prop": "r", "title": "Канал для чтения", "type": "cb" },
+    { "prop": "w", "title": "Канал для записи (команда)", "type": "cb" },
     { "prop": "setchan", "title": "Имя канала данных для записи", "type": "input", "hide": "!data.p3.w" },
     { "prop": "setval", "title": "Записать значение", "type": "input", "hide": "!data.p3.w" }
   ]
