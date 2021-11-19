@@ -179,6 +179,7 @@ module.exports = async function(plugin) {
   });
 
   // События при изменении каналов
+  /*
   plugin.onAdd('channels', recs => {
     recs.forEach(rec => addChannel(rec));
   });
@@ -190,4 +191,10 @@ module.exports = async function(plugin) {
   plugin.onDelete('channels', recs => {
     recs.forEach(rec => deleteChannel(rec));
   });
+  */
+
+ plugin.onChange('channels', () => {
+  plugin.log('Channels has been updated. Restart')
+  plugin.exit(0);
+});
 };

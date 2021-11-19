@@ -1,13 +1,14 @@
 {
   "grid": [
-    { "id": "p2", "xs": 6, "class": "main", "table": "devhard" },
-    { "id": "p3", "xs": 6, "class": "main", "table": "devhard" }
+    { "id": "p2", "xs": 4, "class": "main", "table": "devhard" },
+    { "id": "p3", "xs": 4, "class": "main", "table": "devhard" },
+    { "id": "p9", "xs": 4, "class": "main", "table": "onechannelrtTable" }
   ],
   "spacing": 4,
 
   "p2": [
-    { "prop": "chan", "title": "Channel ID", "type": "input" },  
-    { "prop": "devpropname", "title": "$Devpropname", "type": "input" },
+    { "prop": "chan", "title": "Channel ID", "type": "input" },
+    { "prop": "title", "title": "$Name", "type": "input" },
     {
       "prop": "desc",
       "title": "$Type",
@@ -24,17 +25,23 @@
         }
       ]
     },
-    { "prop": "period", "title": "$Period", "type": "input", "hide": "data.p3.w" },
-    { "prop": "min", "title": "Min", "type": "input", "hide": "data.p3.w || data.p2.desc.id != \"AI\"" },
-    { "prop": "max", "title": "Max", "type": "input", "hide": "data.p3.w || data.p2.desc.id != \"AI\"" },
-    { "prop": "delta", "title": "$Delta", "type": "input", "hide": "data.p3.w || data.p2.desc.id != \"AI\"" },
-    { "prop": "random", "title": "$Random", "type": "cb", "hide": "data.p3.w || data.p2.desc.id != \"AI\"" }
+    { "prop": "devpropname", "title": "$Devpropname", "type": "input" }
   ],
 
   "p3": [
     { "prop": "r", "title": "Канал для чтения", "type": "cb" },
-    { "prop": "w", "title": "Канал для записи (команда)", "type": "cb" },
-    { "prop": "setchan", "title": "Имя канала данных для записи", "type": "input", "hide": "!data.p3.w" },
-    { "prop": "setval", "title": "Записать значение", "type": "input", "hide": "!data.p3.w" }
+    { "prop": "calc", "title": "$Devhard_Calc", "type": "input", "hide": "!data.p3.r" },
+    { "prop": "period", "title": "$Period", "type": "input", "hide": "!data.p3.r" },
+    { "prop": "min", "title": "Min", "type": "input", "hide": "!data.p3.r || data.p2.desc.id != \"AI\"" },
+    { "prop": "max", "title": "Max", "type": "input", "hide": "!data.p3.r || data.p2.desc.id != \"AI\"" },
+    { "prop": "delta", "title": "$Delta", "type": "input", "hide": "!data.p3.r || data.p2.desc.id != \"AI\"" },
+    { "prop": "random", "title": "$Random", "type": "cb", "hide": "!data.p3.r || data.p2.desc.id != \"AI\"" },
+    { "prop": "w", "title": "Канал для записи (команда)", "type": "cb", "hide": "1==1" },
+    { "prop": "setchan", "title": "Имя канала данных для записи", "type": "input", "hide": "1==1" },
+    { "prop": "setval", "title": "Записать значение", "type": "input", "hide": "1==1" }
+  ],
+  "p9": [
+    { "prop": "realtime_chan_str", "title": "Канал", "type": "text" },
+    { "prop": "realtime_dev_str", "title": "Устройство", "type": "text" }
   ]
 }
