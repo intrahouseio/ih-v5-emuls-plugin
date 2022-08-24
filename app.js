@@ -6,24 +6,35 @@
 const util = require('util');
 
 module.exports = async function(plugin) {
-  let interval = 0;
   let reqarr = [];
   let timers = [];
-  run();
+  const commonperiod =
+    plugin.params.usecommonperiod && plugin.params.commonperiod > 0 ? plugin.params.commonperiod * 1000 : 0;
+
+  if (plugin.channels && plugin.channels.length) {
+    if (commonperiod) {
+      reqarr = plugin.channels.map(formItemWithCommonPeriod);
+      const qtime = Date.now() + commonperiod;
+      timers = reqarr.map((item, index) => ({index, qtime}));
+    } else {
+      reqarr = plugin.channels.filter(item => item.period > 0).map(formItem);
+      formTimers();
+    }
+  
+    run();
+  } else {
+    plugin.log('No channels!');
+  }
 
   function run() {
-    if (interval) clearInterval(interval);
-
-    formReq();
-    formTimers();
-
-    interval = setInterval(() => {
+    setInterval(() => {
       const toSendIdx = [];
-      let item = getNextFromTimers();
+      const curtime = Date.now();
+      let item = getNextFromTimers(curtime);
       while (item) {
         if (item && item.index != undefined && item.index < reqarr.length) {
           toSendIdx.push(item.index);
-          item = getNextFromTimers();
+          item = getNextFromTimers(curtime);
         } else {
           item = '';
         }
@@ -35,26 +46,13 @@ module.exports = async function(plugin) {
     }, 100);
   }
 
-  // Сформировать массив запросов с ненулевым периодом, установить начальное значение
-  function formReq() {
-    if (!plugin.channels || !plugin.channels.length) {
-      plugin.log('No channels!');
-      return;
-    }
-    reqarr = plugin.channels.filter(item => item.period > 0).map(formItem);
-  }
-
-  // Сформировать заново очередь на генерацию
+  // Сформировать очередь на генерацию
   function formTimers() {
     const curtime = Date.now();
-
     timers = [];
+    timers.push({ index: 1, qtime: curtime + reqarr[0].tick });
     for (var i = 0; i < reqarr.length; i++) {
-      if (i == 0) {
-        timers.push({ index: 0, qtime: curtime + reqarr[i].tick });
-      } else {
-        insertTimer({ index: i, qtime: 0 }, curtime);
-      }
+      insertTimer({ index: i, qtime: 0 }, curtime);
     }
   }
 
@@ -74,21 +72,10 @@ module.exports = async function(plugin) {
     }
   }
 
-  function removeTimer(index) {
-    let i = 0;
-    while (i < timers.length) {
-      if (timers[i].index == index) {
-        timers.splice(i, 1);
-        return;
-      }
-      i++;
-    }
-  }
-
   // Получить элемент из очереди на генерацию. Очередь упорядочена по qtime
-  function getNextFromTimers() {
+  function getNextFromTimers(curtime) {
     if (timers.length > 0) {
-      const curtime = Date.now();
+      // const curtime = Date.now();
       if (timers[0].qtime <= curtime) {
         let item = timers.shift();
         insertTimer(item, curtime);
@@ -119,36 +106,6 @@ module.exports = async function(plugin) {
     return [{ id: item.id, value: item.value }];
   }
 
-  function addChannel(item) {
-    if (!item || !item.id || !item.period) return;
-
-    reqarr.push(formItem(item));
-    const index = reqarr.length - 1;
-    insertTimer({ index, qtime: 0 }, Date.now());
-  }
-
-  function updateChannel(item) {
-    const { oldid, id } = item;
-    if (!oldid || !id) return;
-
-    deleteChannel({ oldid });
-    addChannel(item);
-  }
-
-  function deleteChannel({ oldid }) {
-    const index = findItemById(oldid);
-    if (index < 0) return;
-    removeTimer(index);
-    reqarr.splice(index, 1);
-  }
-
-  function findItemById(id) {
-    for (let i = 0; i < reqarr.length; i++) {
-      if (reqarr[i].id == id) return i;
-    }
-    return -1;
-  }
-
   function genRandom(item) {
     return item.min + Math.floor((item.max - item.min) * Math.random());
   }
@@ -162,11 +119,20 @@ module.exports = async function(plugin) {
     return item;
   }
 
+  function formItemWithCommonPeriod(item) {
+    item.value = item.desc == 'DI' ? 1 : Number(item.min);
+    item.random = item.random || 0;
+    item.min = Number(item.min);
+    item.max = Number(item.max);
+    item.tick = commonperiod;
+    return item;
+  }
+
   // --- События плагина ---
   /**  act
-  * Получил от сервера команду(ы) для устройства 
-  * @param {Array of Objects} - data - массив команд
-  */
+   * Получил от сервера команду(ы) для устройства
+   * @param {Array of Objects} - data - массив команд
+   */
   plugin.on('act', data => {
     if (!data) return;
 
@@ -178,23 +144,8 @@ module.exports = async function(plugin) {
     plugin.sendData(result);
   });
 
-  // События при изменении каналов
-  /*
-  plugin.onAdd('channels', recs => {
-    recs.forEach(rec => addChannel(rec));
+  plugin.onChange('channels', () => {
+    plugin.log('Channels has been updated. Restart');
+    plugin.exit(0);
   });
-
-  plugin.onUpdate('channels', recs => {
-    recs.forEach(rec =>  updateChannel(rec));
-  });
-
-  plugin.onDelete('channels', recs => {
-    recs.forEach(rec => deleteChannel(rec));
-  });
-  */
-
- plugin.onChange('channels', () => {
-  plugin.log('Channels has been updated. Restart')
-  plugin.exit(0);
-});
 };

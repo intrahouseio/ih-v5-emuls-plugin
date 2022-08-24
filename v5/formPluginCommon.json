@@ -8,9 +8,9 @@
   "spacing": 10,
 
   "p1": [
-    { "prop": "id", "title": "ID", "type": "text" }
-   
-   
+    { "prop": "id", "title": "ID", "type": "text" },
+    { "prop": "usecommonperiod", "title": "Использовать общий период", "type": "cb" },
+    { "prop": "commonperiod", "title": "Общий период", "type": "input", "hide": "!data.p1.usecommonperiod" }
   ],
 
   "p2": [
