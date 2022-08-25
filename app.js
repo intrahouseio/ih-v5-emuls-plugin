@@ -50,8 +50,8 @@ module.exports = async function(plugin) {
   function formTimers() {
     const curtime = Date.now();
     timers = [];
-    timers.push({ index: 1, qtime: curtime + reqarr[0].tick });
-    for (var i = 0; i < reqarr.length; i++) {
+    timers.push({ index: 0, qtime: curtime + reqarr[0].tick });
+    for (var i = 1; i < reqarr.length; i++) {
       insertTimer({ index: i, qtime: 0 }, curtime);
     }
   }
