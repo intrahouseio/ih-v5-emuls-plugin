@@ -8,8 +8,16 @@ const util = require('util');
 module.exports = async function(plugin) {
   let reqarr = [];
   let timers = [];
-  const commonperiod =
-    plugin.params.usecommonperiod && plugin.params.commonperiod > 0 ? plugin.params.commonperiod * 1000 : 0;
+  let commonperiod = 0;
+  let koeffperiod = 1;
+
+  if (plugin.params.usecommonperiod) {
+    commonperiod = plugin.params.commonperiod * 1000;
+  } else if (plugin.params.koeffperiod>0) {
+    koeffperiod = plugin.params.koeffperiod;
+  }
+
+  
 
   if (plugin.channels && plugin.channels.length) {
     if (commonperiod) {
@@ -115,7 +123,7 @@ module.exports = async function(plugin) {
     item.random = item.random || 0;
     item.min = Number(item.min);
     item.max = Number(item.max);
-    item.tick = Number(item.period) * 1000;
+    item.tick = Number(item.period) * 1000 * koeffperiod;
     return item;
   }
 

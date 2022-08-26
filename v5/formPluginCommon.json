@@ -9,7 +9,8 @@
 
   "p1": [
     { "prop": "id", "title": "ID", "type": "text" },
-    { "prop": "usecommonperiod", "title": "Использовать общий период", "type": "cb" },
+    { "prop": "koeffperiod", "title": "Коэффициент для периода канала", "type": "input", "default": 1, "hide": "data.p1.usecommonperiod"},
+    { "prop": "usecommonperiod", "title": "Использовать общий период для всех каналов", "type": "cb" },
     { "prop": "commonperiod", "title": "Общий период", "type": "input", "hide": "!data.p1.usecommonperiod" }
   ],
 
