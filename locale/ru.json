@@ -6,5 +6,21 @@
   "Period": "Период, сек",
   "Delta": "Дельта",
   "Random": "Случайное в диапазоне min-max",
-  "Weight": "Вес импульса"
+  "Weight": "Вес импульса",
+  "CommonPeriod": "Период",
+  "UseCommonPeriod": "Использовать общий период для всех каналов",
+  "FactorForPeriod": "Применить к периодам коэффициент",
+  "realtime_chan_val" : "Канал: значение",
+  "realtime_chan_ts" : "Канал: время",
+  "realtime_dev_val" : "Устройство: значение",
+  "realtime_dev_ts" : "Устройство: время",
+  "realtime_dev_err" : "Устройство: ошибка",
+  "state" : "Состояние",
+  "laststart" : "Время запуска",
+  "laststop" : "Время останова",
+  "uptime" : "Время работы",
+  "error" : "Ошибка",
+  "realtime_chan_str": "Канал",
+  "realtime_dev_str": "Устройство"
+
 }

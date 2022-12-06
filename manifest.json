@@ -1,6 +1,13 @@
 {
   "description": "Emulator",
 
+  "validator": {
+    "main": {
+      "koeffperiod": { "min": 0.1, "max":999 },
+      "commonperiod": { "min": 0.1 }
+    }
+  },
+
   "default_channel": {
     "chan": "1",
     "r":1,

@@ -6,5 +6,21 @@
   "Period": "Period, sec",
   "Delta": "Delta",
   "Random": "Random",
-  "Weight": "Pulse Weight"
+  "Weight": "Pulse Weight",
+  "CommonPeriod": "Period",
+  "UseCommonPeriod": "Use common period for all channels",
+  "FactorForPeriod": "Factor for each channel period",
+  "realtime_chan_val" : "Channel: value",
+  "realtime_chan_ts" : "Channel: time",
+  "realtime_dev_val" : "Device: value",
+  "realtime_dev_ts" : "Device: time",
+  "realtime_dev_err" : "Device: error",
+  "realtime_chan_str": "Channel",
+  "realtime_dev_str": "Device",
+  "state" : "State",
+  "laststart" : "Start time",
+  "laststop" : "Stop time",
+  "uptime" : "Uptime",
+  "error" : "Error"
+
 }
